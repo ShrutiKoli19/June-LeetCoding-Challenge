@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+        int ans = 0;
+        unordered_map<int, int> map;
+        int n = nums.size();
+        int l = 0;
+        int sum = 0;
+        for(int r = 0; r<n; r++){
+            if(map.find(nums[r]) != map.end()){
+                int index = map[nums[r]];
+                while(l<=index){
+                    map.erase(nums[l]);
+                    sum -= nums[l];
+                    l += 1;
+                }
+            }
+            
+            map[nums[r]] = r;
+            sum += nums[r];
+            ans = max(ans, sum);
+        }
+        
+        return ans;
+        
+    }
+};
